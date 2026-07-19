@@ -1,0 +1,119 @@
+// ==========================
+// Wedding Countdown
+// ==========================
+
+const weddingDate = new Date("December 4, 2026 19:00:00").getTime();
+
+const countdown = setInterval(() => {
+
+    const now = new Date().getTime();
+
+    const distance = weddingDate - now;
+
+    if (distance < 0) {
+        clearInterval(countdown);
+
+        document.getElementById("timer").innerHTML =
+            "<h2>🎉 Today is our Nikah! 🤍</h2>";
+
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) /
+        (1000 * 60 * 60));
+
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) /
+        (1000 * 60));
+
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;
+    document.getElementById("seconds").innerHTML = seconds;
+
+}, 1000);
+
+// ==========================
+// Fade Animation
+// ==========================
+
+const observer = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+
+        }
+
+    });
+
+}, {
+
+    threshold: 0.2
+
+});
+
+document.querySelectorAll("section").forEach(section => {
+
+    section.style.opacity = "0";
+    section.style.transform = "translateY(40px)";
+    section.style.transition = "all .8s ease";
+
+    observer.observe(section);
+
+});
+
+// ==========================
+// Floating Stars
+// ==========================
+
+function createStar() {
+
+    const star = document.createElement("div");
+
+    star.innerHTML = "✦";
+
+    star.style.position = "fixed";
+    star.style.left = Math.random() * window.innerWidth + "px";
+    star.style.top = "-20px";
+    star.style.fontSize = (10 + Math.random() * 12) + "px";
+    star.style.color = "#d4af37";
+    star.style.opacity = "0.7";
+    star.style.pointerEvents = "none";
+    star.style.zIndex = "-1";
+
+    document.body.appendChild(star);
+
+    let pos = -20;
+
+    const move = setInterval(() => {
+
+        pos += 2;
+
+        star.style.top = pos + "px";
+
+        if (pos > window.innerHeight + 20) {
+
+            clearInterval(move);
+
+            star.remove();
+
+        }
+
+    }, 30);
+
+}
+
+setInterval(createStar, 800);
+
+// ==========================
+// Greeting
+// ==========================
+
+console.log("Welcome to Tahreen & Faiz's Wedding Invitation 🌙");
